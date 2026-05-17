@@ -1,6 +1,6 @@
 //Probability that any single parameter (per creature trait, per brain weight)
 //is perturbed during reproduction.
-const MUTATION_RATE = 0.01;
+const MUTATION_RATE = 0.05;
 
 //With probability MUTATION_RATE, add uniform jitter in [-sigma, +sigma] and
 //clamp to [min, max]; otherwise return value unchanged.
