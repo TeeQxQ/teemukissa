@@ -42,15 +42,35 @@ class CanvasArtist
 
     drawCreature(creature, origin, scale)
     {
+        const c = creature.color;
         this.ctx.beginPath();
-        this.ctx.fillStyle = 'cyan';
+        this.ctx.fillStyle = 'rgb(' + Math.round(c.r) + ',' + Math.round(c.g) + ',' + Math.round(c.b) + ')';
+        this.ctx.strokeStyle = 'black';
+        this.ctx.lineWidth = Math.max(1, scale);
         this.ctx.arc(origin.x + Math.round(creature.location.x * scale),
                      origin.y + Math.round(creature.location.y * scale),
                      creature.radius * scale,
                      0,
                      Math.PI * 2);
         this.ctx.fill();
+        this.ctx.stroke();
         this.ctx.closePath();
+
+        //Two eyes -- small black dots offset forward and to either side of facing.
+        const eyeOffsetAngle = Math.PI / 6;
+        const eyeDistance = creature.radius * 0.55;
+        const eyeRadius = creature.radius * 0.18;
+        for (const sign of [-1, 1])
+        {
+            const a = creature.direction + sign * eyeOffsetAngle;
+            const ex = origin.x + Math.round((creature.location.x + Math.cos(a) * eyeDistance) * scale);
+            const ey = origin.y + Math.round((creature.location.y + Math.sin(a) * eyeDistance) * scale);
+            this.ctx.beginPath();
+            this.ctx.fillStyle = 'black';
+            this.ctx.arc(ex, ey, eyeRadius * scale, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.closePath();
+        }
 
         if (DEBUG_CANVAS_ARTIST)
         {
@@ -70,15 +90,17 @@ class CanvasArtist
             }
         }
 
-        this.ctx.stroke();
-        this.ctx.font = "10px Arial";
-        this.ctx.fillStyle = "black";
-        this.ctx.textAlign = "center";
-        this.ctx.fillText(creature.energy.toFixed(2), 
-                          origin.x + Math.round((creature.location.x) * scale),
-                          origin.y + Math.round((creature.location.y) * scale)
-                        );
-
+        if (DEBUG_CANVAS_ARTIST)
+        {
+            this.ctx.stroke();
+            this.ctx.font = "10px Arial";
+            this.ctx.fillStyle = "black";
+            this.ctx.textAlign = "center";
+            this.ctx.fillText(creature.energy.toFixed(2),
+                              origin.x + Math.round((creature.location.x) * scale),
+                              origin.y + Math.round((creature.location.y) * scale)
+                            );
+        }
     }
 
     drawFlower(flower, origin, scale)

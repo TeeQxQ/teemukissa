@@ -38,13 +38,21 @@ class Creature
         //energy -= velocityMagnitude * energyConsumptionPerSpeed.
         this.energyConsumptionPerSpeed = 0.02;
         //Extra energy drained per step while standing on a water tile.
-        this.waterDrain = 0.5;
+        this.waterDrain = 0.2;
         //Energy threshold at which the creature reproduces; on reproduction
         //the parent loses half its energy and the child starts with the
         //parent's remaining (post-split) energy. Randomized for initial
         //creatures; children inherit the parent's value (see reproduce()).
         //Range 50-95.
         this.reproductionEnergy = Math.random() * 45 + 50;
+
+        //Body color. Randomized for initial creatures; children inherit the
+        //parent's color (per channel mutation possible, see reproduce()).
+        this.color = {
+            r: Math.floor(Math.random() * 256),
+            g: Math.floor(Math.random() * 256),
+            b: Math.floor(Math.random() * 256)
+        };
 
         //Vision. Three sight spots: left, center, right. All at the same distance,
         //offset by sightAngles (radians) relative to facing direction.
@@ -187,6 +195,11 @@ class Creature
         child.minSpeed           = maybeMutate(this.minSpeed,           0.05, 0.05, 1.0);
         child.maxSpeed           = maybeMutate(this.maxSpeed,           0.05, 0.3,  2.0);
         child.reproductionEnergy = maybeMutate(this.reproductionEnergy, 5,    30,   99);
+        child.color = {
+            r: maybeMutate(this.color.r, 25, 0, 255),
+            g: maybeMutate(this.color.g, 25, 0, 255),
+            b: maybeMutate(this.color.b, 25, 0, 255)
+        };
         //If mutation crossed the speeds, swap so min <= max.
         if (child.minSpeed > child.maxSpeed)
         {
