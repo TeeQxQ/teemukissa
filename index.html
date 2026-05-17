@@ -1,73 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daddy Joke</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: #fff8e7;
-            color: #3a2a14;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-        #joke {
-            max-width: 600px;
-            font-size: 1.5rem;
-            line-height: 1.4;
-            text-align: center;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        button {
-            margin-top: 1.5rem;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border: none;
-            border-radius: 6px;
-            background: #d9822b;
-            color: #fff;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #b8691f;
-        }
-    </style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Evolution Simulator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div id="joke">Loading...</div>
-    <button id="another">Another one</button>
-
-    <script>
-        async function loadJoke() {
-            const el = document.getElementById('joke');
-            el.textContent = 'Loading...';
-            try {
-                const res = await fetch('https://icanhazdadjoke.com/', {
-                    headers: { 'Accept': 'application/json' }
-                });
-                const data = await res.json();
-                el.textContent = data.joke;
-            } catch (err) {
-                el.textContent = 'Could not fetch a joke. Try again.';
-            }
-        }
-
-        document.getElementById('another').addEventListener('click', loadJoke);
-        loadJoke();
-    </script>
+	<!--<canvas id="UI-layer"></canvas>-->
+	<canvas id="game-layer"></canvas>
+	<canvas id="background-layer"></canvas>
+	<script type="text/javascript" src="mapTile.js"></script>
+	<script type="text/javascript" src="flower.js"></script>
+	<script type="text/javascript" src="brain.js"></script>
+	<script type="text/javascript" src="creature.js"></script>
+	<script type="text/javascript" src="canvasArtist.js"></script>
+	<script type="text/javascript" src="mapGenerator.js"></script>
+	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
